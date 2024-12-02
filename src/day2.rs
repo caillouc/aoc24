@@ -21,6 +21,7 @@ fn is_safe(level: &[i32], resilient: bool) -> bool {
     let increase = level.get(0) < level.get(1);
     let mut previous = level.get(0).unwrap();
     let mut first_fault = false;
+    let mut nb_check_done = 0;
     for i in &level[1..] {
         if !increase && i > previous || 
             increase && i < previous ||
@@ -29,14 +30,23 @@ fn is_safe(level: &[i32], resilient: bool) -> bool {
             if !resilient {
                 return false
             } else if first_fault {
-                return is_safe(&level[1..], false) || 
-                       is_safe(&[&[level[0]], &level[2..]].concat(), false);
+                // If more than one check have been done, we can be confident that
+                // `increase` var is correct
+                // With this check we avoid the recursive call
+                if nb_check_done > 1 {
+                    return false
+                } else {
+                    // We can skip the first or the second element
+                    return is_safe(&level[1..], false) || 
+                        is_safe(&[&[level[0]], &level[2..]].concat(), false);
+                }
             } else {
                 first_fault = true;
                 continue;
             }
         }     
         previous = i;
+        nb_check_done += 1;
     }
     true
 }
@@ -79,6 +89,9 @@ fn part_two() {
 
 #[test]
 fn custom_test() {
-    let res = solve2(&String::from("5 8 4 3 2 1"));
-    assert_eq!(1, res)
+    let res = solve2(&String::from("5 8 4 3 2 1
+10 5 4 3 2 1
+5 10 4 3 2 1
+"));
+    assert_eq!(3, res)
 }
