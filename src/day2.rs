@@ -1,7 +1,6 @@
 pub fn solve(data: String) {
     println!("Part one : {}", solve1(&data));
     println!("Part two : {}", solve2(&data));
-
 }
 
 pub fn parse(data: & String) -> Vec<Vec<i32>> {
