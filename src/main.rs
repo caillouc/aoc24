@@ -4,6 +4,7 @@ use std::env;
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 
 
 fn main() {
@@ -21,6 +22,7 @@ fn main() {
         1 => day1::solve(data),    
         2 => day2::solve(data),    
         3 => day3::solve(data),
+        4 => day4::solve(data),
         day => println!("Invalid day {}", day)
     }
 }
