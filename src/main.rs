@@ -6,6 +6,7 @@ mod day2;
 mod day3;
 mod day4;
 mod day5;
+mod day6;
 
 
 fn main() {
@@ -25,6 +26,7 @@ fn main() {
         3 => day3::solve(data),
         4 => day4::solve(data),
         5 => day5::solve(data),
+        6 => day6::solve(data),
         day => println!("Invalid day {}", day)
     }
 }
