@@ -1,6 +1,8 @@
 use std::fs;
 use std::env;
 
+mod utils;
+mod parser_helper;
 mod day1;
 mod day2;
 mod day3;
@@ -10,6 +12,7 @@ mod day6;
 mod day7;
 mod day8;
 mod day9;
+mod day10;
 
 
 fn main() {
@@ -33,6 +36,7 @@ fn main() {
         7 => day7::solve(data),
         8 => day8::solve(data),
         9 => day9::solve(data),
+        10 => day10::solve(data),
         day => println!("Invalid day {}", day)
     }
 }
