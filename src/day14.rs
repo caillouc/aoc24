@@ -72,7 +72,7 @@ fn solve2(robots: &Vec<Robot>) -> i32 {
         for r in robots {
             res_positions.insert(r.evolve(second));
         }
-        if res_positions.len() == robots.len() {
+        // if res_positions.len() == robots.len() {
             println!("Second {second}");
             for y in 0..103 {
                 for x in 0..101 {
@@ -84,12 +84,15 @@ fn solve2(robots: &Vec<Robot>) -> i32 {
                 }
                 println!();
             }
-            sleep(Duration::from_secs(5));
-        }
+            sleep(Duration::from_millis(100));
+        // }
         second += 1;
+        // These two frame have a special pattern
+        // 28 mod 101 
+        // 84 mod 103
+        // Chinese remainder theorem could lead to the answer
     }
 }
-//                     X             XX                                 X                              X
 
 #[test]
 fn part_one() {
