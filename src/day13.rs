@@ -50,44 +50,70 @@ fn parse(data: String) -> Vec<Machine> {
 // solve
 // ax + by = c
 // dx + ey = f
-fn equation_solve(a: i32, b: i32, c: i32, d: i32, e: i32, f: i32) -> Option<(i32, i32)> {
-    if a * e - b * d == 0 {
+fn equation_solve(a: f64, b: f64, c: f64, d: f64, e: f64, f: f64) -> Option<(i64, i64)> {
+    let det = a * e - b * d;
+    if a / d == b / e && a / d == c / f && det == 0.0 {
+        // There are an infinite number of solution, return the cheapest one
+        let ret_y = c / b;
+        if ret_y.fract() == 0.0 {
+            return Some((0, ret_y as i64));
+        } else {
+            return None;
+        }
+    }
+    if det == 0.0 {
         return None;
     }
-    if b * (a * e - b * d) == 0 {
-        return None;
+    let x = (c * e - b * f) / det;
+    let y = (a * f - c * d) / det;
+    if x.fract() == 0.0 && y.fract() == 0.0 {
+        return Some((x as i64, y as i64));
     }
-    let x = (e * c - b * f) / (a * e - b * d);
-    let y = (c * (a * e - b * d) - a * (e * c - b * f)) / (b * (a * e - b * d));
-    Some((x, y))
+    None
 }
 
-fn solve1(machines: &Vec<Machine>) -> i32 {
+fn solve1(machines: &Vec<Machine>) -> i64 {
     let mut solutions = vec![];
-    println!("{:?}", machines.iter().last());
     for m in machines {
         if let Some(res) = equation_solve(
-            m.button_a.x(),
-            m.button_b.x(),
-            m.prize.x(),
-            m.button_a.y(),
-            m.button_b.y(),
-            m.prize.y(),
+            m.button_a.x() as f64,
+            m.button_b.x() as f64,
+            m.prize.x() as f64,
+            m.button_a.y() as f64,
+            m.button_b.y() as f64,
+            m.prize.y() as f64,
         ) {
             solutions.push(res);
         }
     }
-    let solutions: Vec<(i32, i32)> = solutions
+    let solutions: Vec<(i64, i64)> = solutions
         .iter()
         .filter(|(p1, p2)| *p1 <= 100 && *p2 <= 100 && *p1 >= 0 && *p2 >= 0)
         .map(|v| *v)
         .collect();
-    println!("{:?}", solutions);
     solutions.iter().fold(0, |acc, (a, b)| acc + a * 3 + b)
 }
 
-fn solve2(machines: &Vec<Machine>) -> i32 {
-    0
+fn solve2(machines: &Vec<Machine>) -> i64 {
+    let mut solutions = vec![];
+    for m in machines {
+        if let Some(res) = equation_solve(
+            m.button_a.x() as f64,
+            m.button_b.x() as f64,
+            (m.prize.x() as i64 + 10000000000000)as f64,
+            m.button_a.y() as f64,
+            m.button_b.y() as f64,
+            (m.prize.y() as i64 + 10000000000000) as f64,
+        ) {
+            solutions.push(res);
+        }
+    }
+    let solutions: Vec<(i64, i64)> = solutions
+        .iter()
+        .filter(|(p1, p2)| *p1 >= 0 && *p2 >= 0)
+        .map(|v| *v)
+        .collect();
+    solutions.iter().fold(0, |acc, (a, b)| acc + a * 3 + b)
 }
 
 #[test]
