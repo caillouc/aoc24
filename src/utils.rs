@@ -1,4 +1,4 @@
-use std::ops::{Add, Sub};
+use std::{ops::{Add, Sub}, usize};
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub struct Position{x: i32, y: i32}
@@ -46,5 +46,41 @@ impl Position {
             return 0;
         }
         self.y as usize
+    }
+    pub fn left(&self) -> Option<Self> {
+        if self.x - 1 < 0 {return None;}
+        Some(Position{x: self.x - 1, y: self.y})
+    }
+    pub fn rigth(&self, max_x: usize) -> Option<Self> {
+        if self.x + 1 >= max_x as i32 {return None;}
+        Some(Position{x: self.x + 1, y: self.y})
+    }
+    pub fn top(&self) -> Option<Self> {
+        if self.y - 1 < 0 {return None;}
+        Some(Position{x: self.x, y: self.y - 1})
+    }
+    pub fn bottom(&self, max_y: usize) -> Option<Self> {
+        if self.y + 1 >= max_y as i32 {return None;}
+        Some(Position{x: self.x, y: self.y + 1})
+    }
+    pub fn top_left(&self) -> Option<Self> {
+        if self.x - 1 < 0 {return None;}
+        if self.y - 1 < 0 {return None;}
+        Some(Position{x: self.x - 1, y: self.y - 1})
+    }
+    pub fn bottom_left(&self, max_y: usize) -> Option<Self> {
+        if self.x - 1 < 0 {return None;}
+        if self.y + 1 >= max_y as i32 {return None;}
+        Some(Position{x: self.x - 1, y: self.y + 1})
+    }
+    pub fn top_rigth(&self, max_x: usize) -> Option<Self> {
+        if self.x + 1 >= max_x as i32 {return None;}
+        if self.y - 1 < 0 {return None;}
+        Some(Position{x: self.x + 1, y: self.y - 1})
+    }
+    pub fn bottom_rigth(&self, max_x: usize, max_y: usize) -> Option<Self> {
+        if self.x + 1 >= max_x as i32 {return None;}
+        if self.y + 1 >= max_y as i32 {return None;}
+        Some(Position{x: self.x + 1, y: self.y + 1})
     }
 }
