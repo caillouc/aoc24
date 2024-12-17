@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use crate::parser_helper;
 
 pub fn solve(data: String) {
-    let stones: Vec<u64> = parser_helper::parse_vec_delimiter(data, " ");
+    let stones: Vec<u64> = parser_helper::parse_vec_delimiter(data.as_str(), " ");
     println!("Part one : {}", solve1(&stones));
     println!("Part two : {}", solve2(&stones));
 }
@@ -46,7 +46,7 @@ fn solve2(stones: &Vec<u64>) -> usize {
 
 #[test]
 fn part_one() {
-    let stones: Vec<u64> = parser_helper::parse_vec_delimiter(String::from("125 17"), " ");
+    let stones: Vec<u64> = parser_helper::parse_vec_delimiter("125 17", " ");
     let res = solve1(&stones);
     assert_eq!(55312, res);
 }

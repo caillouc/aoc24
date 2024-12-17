@@ -4,7 +4,7 @@ use crate::parser_helper;
 use crate::utils::Position;
 
 pub fn solve(data: String) {
-    let map = parser_helper::parse_double_vec_int(data);
+    let map = parser_helper::parse_double_vec_int(data.as_str());
     println!("Part one : {}", solve1(&map));
     println!("Part two : {}", solve2(&map));
 }
@@ -130,7 +130,7 @@ fn solve2(map: &Vec<Vec<u32>>) -> i32 {
 
 #[test]
 fn part_one() {
-    let map = parser_helper::parse_double_vec_int(String::from("\
+    let map = parser_helper::parse_double_vec_int("\
 89010123
 78121874
 87430965
@@ -139,14 +139,14 @@ fn part_one() {
 32019012
 01329801
 10456732",
-    ));
+    );
     let res = solve1(&map);
     assert_eq!(36, res);
 }
 
 #[test]
 fn part_two() {
-    let map = parser_helper::parse_double_vec_int(String::from("\
+    let map = parser_helper::parse_double_vec_int("\
 89010123
 78121874
 87430965
@@ -155,7 +155,7 @@ fn part_two() {
 32019012
 01329801
 10456732",
-    ));
+    );
     let res = solve2(&map);
     assert_eq!(81, res);
 }

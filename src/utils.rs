@@ -1,7 +1,12 @@
-use std::{ops::{Add, Sub}, usize};
+use std::{ops::{Add, Sub}, usize, fmt};
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub struct Position{x: i32, y: i32}
+impl fmt::Display for Position {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }
+}
 
 impl Add for Position {
     type Output = Position;
@@ -55,30 +60,30 @@ impl Position {
         if self.x + 1 >= max_x as i32 {return None;}
         Some(Position{x: self.x + 1, y: self.y})
     }
-    pub fn top(&self) -> Option<Self> {
+    pub fn up(&self) -> Option<Self> {
         if self.y - 1 < 0 {return None;}
         Some(Position{x: self.x, y: self.y - 1})
     }
-    pub fn bottom(&self, max_y: usize) -> Option<Self> {
+    pub fn down(&self, max_y: usize) -> Option<Self> {
         if self.y + 1 >= max_y as i32 {return None;}
         Some(Position{x: self.x, y: self.y + 1})
     }
-    pub fn top_left(&self) -> Option<Self> {
+    pub fn up_left(&self) -> Option<Self> {
         if self.x - 1 < 0 {return None;}
         if self.y - 1 < 0 {return None;}
         Some(Position{x: self.x - 1, y: self.y - 1})
     }
-    pub fn bottom_left(&self, max_y: usize) -> Option<Self> {
+    pub fn down_left(&self, max_y: usize) -> Option<Self> {
         if self.x - 1 < 0 {return None;}
         if self.y + 1 >= max_y as i32 {return None;}
         Some(Position{x: self.x - 1, y: self.y + 1})
     }
-    pub fn top_rigth(&self, max_x: usize) -> Option<Self> {
+    pub fn up_rigth(&self, max_x: usize) -> Option<Self> {
         if self.x + 1 >= max_x as i32 {return None;}
         if self.y - 1 < 0 {return None;}
         Some(Position{x: self.x + 1, y: self.y - 1})
     }
-    pub fn bottom_rigth(&self, max_x: usize, max_y: usize) -> Option<Self> {
+    pub fn down_rigth(&self, max_x: usize, max_y: usize) -> Option<Self> {
         if self.x + 1 >= max_x as i32 {return None;}
         if self.y + 1 >= max_y as i32 {return None;}
         Some(Position{x: self.x + 1, y: self.y + 1})

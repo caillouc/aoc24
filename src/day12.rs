@@ -4,7 +4,7 @@ use crate::parser_helper;
 use crate::utils::Position;
 
 pub fn solve(data: String) {
-    let pots = parser_helper::parse_double_vec(data);
+    let pots = parser_helper::parse_double_vec(data.as_str());
     println!("Part one : {}", solve1(&pots));
     println!("Part two : {}", solve2(&pots));
 }
@@ -29,8 +29,8 @@ fn update_region(current_pos: Position, region: &mut Region, pots: &Vec<Vec<char
     let to_check: Vec<Position> = vec![
         current_pos.left(),
         current_pos.rigth(pots[0].len()),
-        current_pos.top(),
-        current_pos.bottom(pots.len()),
+        current_pos.up(),
+        current_pos.down(pots.len()),
     ]
     .iter()
     .filter(|e| e.is_some())
@@ -92,38 +92,38 @@ fn nb_edges(current_pos: &Position, region: &Region, pots: &Vec<Vec<char>>) -> i
     let max_x = pots[0].len();
     let max_y = pots.len();
 
-    if !contains(region, current_pos.top()) && !contains(region, current_pos.left()) {
+    if !contains(region, current_pos.up()) && !contains(region, current_pos.left()) {
         count += 1;
     }
-    if !contains(region, current_pos.top_left())
-        && contains(region, current_pos.top())
+    if !contains(region, current_pos.up_left())
+        && contains(region, current_pos.up())
         && contains(region, current_pos.left())
     {
         count += 1;
     }
-    if !contains(region, current_pos.bottom(max_y)) && !contains(region, current_pos.left()) {
+    if !contains(region, current_pos.down(max_y)) && !contains(region, current_pos.left()) {
         count += 1;
     }
-    if !contains(region, current_pos.bottom_left(max_y))
-        && contains(region, current_pos.bottom(max_y))
+    if !contains(region, current_pos.down_left(max_y))
+        && contains(region, current_pos.down(max_y))
         && contains(region, current_pos.left())
     {
         count += 1;
     }
-    if !contains(region, current_pos.top()) && !contains(region, current_pos.rigth(max_x)) {
+    if !contains(region, current_pos.up()) && !contains(region, current_pos.rigth(max_x)) {
         count += 1;
     }
-    if !contains(region, current_pos.top_rigth(max_x))
-        && contains(region, current_pos.top())
+    if !contains(region, current_pos.up_rigth(max_x))
+        && contains(region, current_pos.up())
         && contains(region, current_pos.rigth(max_x))
     {
         count += 1;
     }
-    if !contains(region, current_pos.bottom(max_y)) && !contains(region, current_pos.rigth(max_x)) {
+    if !contains(region, current_pos.down(max_y)) && !contains(region, current_pos.rigth(max_x)) {
         count += 1;
     }
-    if !contains(region, current_pos.bottom_rigth(max_x, max_y))
-        && contains(region, current_pos.bottom(max_y))
+    if !contains(region, current_pos.down_rigth(max_x, max_y))
+        && contains(region, current_pos.down(max_y))
         && contains(region, current_pos.rigth(max_x))
     {
         count += 1;
@@ -143,20 +143,20 @@ fn solve2(pots: &Vec<Vec<char>>) -> i32 {
 
 #[test]
 fn part_one_simple() {
-    let pots = parser_helper::parse_double_vec(String::from(
+    let pots = parser_helper::parse_double_vec(
         "\
 AAAA
 BBCD
 BBCC
 EEEC
 ",
-    ));
+    );
     assert_eq!(140, solve1(&pots));
 }
 
 #[test]
 fn part_one_multiple() {
-    let pots = parser_helper::parse_double_vec(String::from(
+    let pots = parser_helper::parse_double_vec(
         "\
 OOOOO
 OXOXO
@@ -164,13 +164,13 @@ OOOOO
 OXOXO
 OOOOO
 ",
-    ));
+    );
     assert_eq!(772, solve1(&pots));
 }
 
 #[test]
 fn part_one() {
-    let pots = parser_helper::parse_double_vec(String::from(
+    let pots = parser_helper::parse_double_vec(
         "\
 RRRRIICCFF
 RRRRIICCCF
@@ -183,13 +183,13 @@ MIIIIIJJEE
 MIIISIJEEE
 MMMISSJEEE
 ",
-    ));
+    );
     assert_eq!(1930, solve1(&pots));
 }
 
 #[test]
 fn part_two_e() {
-    let pots = parser_helper::parse_double_vec(String::from(
+    let pots = parser_helper::parse_double_vec(
         "\
 EEEEE
 EXXXX
@@ -197,13 +197,13 @@ EEEEE
 EXXXX
 EEEEE
 ",
-    ));
+    );
     assert_eq!(236, solve2(&pots));
 }
 
 #[test]
 fn part_two() {
-    let pots = parser_helper::parse_double_vec(String::from(
+    let pots = parser_helper::parse_double_vec(
         "\
 AAAAAA
 AAABBA
@@ -212,13 +212,13 @@ ABBAAA
 ABBAAA
 AAAAAA
 ",
-    ));
+    );
     assert_eq!(368, solve2(&pots));
 }
 
 #[test]
 fn part_two_big() {
-    let pots = parser_helper::parse_double_vec(String::from(
+    let pots = parser_helper::parse_double_vec(
         "\
 RRRRIICCFF
 RRRRIICCCF
@@ -231,6 +231,6 @@ MIIIIIJJEE
 MIIISIJEEE
 MMMISSJEEE
 ",
-    ));
+    );
     assert_eq!(1206, solve2(&pots));
 }

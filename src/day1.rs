@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
 pub fn solve(data: String) {
-    println!("The solution for the first problem of day 1 is : {}", solve1(&data));
-    println!("The solution for the second problem of day 1 is : {}", solve2(&data));
+    println!("Part one : {}", solve1(&data));
+    println!("Part two : {}", solve2(&data));
 }
 
 fn parse(data: &String) -> (Vec<i32>, Vec<i32>) {
