@@ -8,6 +8,7 @@ mod day12;
 mod day13;
 mod day14;
 mod day15;
+mod day16;
 mod day2;
 mod day3;
 mod day4;
@@ -47,6 +48,7 @@ fn main() {
         "day13" => day13::solve(data),
         "day14" => day14::solve(data),
         "day15" => day15::solve(data),
+        "day16" => day16::solve(data),
         day => println!("Invalid day {}", day),
     }
 }
